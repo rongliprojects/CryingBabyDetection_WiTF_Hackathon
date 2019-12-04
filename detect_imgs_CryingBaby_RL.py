@@ -12,9 +12,9 @@ import argparse
 import sys
 
 #import cv2
-from vision.ssd.config.fd_config import define_img_size
-from vision.ssd.mb_tiny_fd import create_mb_tiny_fd, create_mb_tiny_fd_predictor
-from vision.ssd.mb_tiny_RFB_fd import create_Mb_Tiny_RFB_fd, create_Mb_Tiny_RFB_fd_predictor
+from UltraLightFastGenericFaceDetector1MB.vision.ssd.config.fd_config import define_img_size
+from UltraLightFastGenericFaceDetector1MB.vision.ssd.mb_tiny_fd import create_mb_tiny_fd, create_mb_tiny_fd_predictor
+from UltraLightFastGenericFaceDetector1MB.vision.ssd.mb_tiny_RFB_fd import create_Mb_Tiny_RFB_fd, create_Mb_Tiny_RFB_fd_predictor
 
 def face_detector(image):
     parser = argparse.ArgumentParser(
@@ -39,17 +39,16 @@ def face_detector(image):
 
 
     #result_path = "./detect_imgs_results"
-    label_path = "./models/voc-model-labels.txt"
+    label_path = "UltraLightFastGenericFaceDetector1MB/models/voc-model-labels.txt"
     test_device = 'cpu'#args.test_device #Modified by Rong Li
-    
     class_names = [name.strip() for name in open(label_path).readlines()]
     if args.net_type == 'slim':
-        model_path = "models/pretrained/version-slim-320.pth"
+        model_path = "UltraLightFastGenericFaceDetector1MB/models/pretrained/version-slim-320.pth"
         # model_path = "models/pretrained/version-slim-640.pth"
         net = create_mb_tiny_fd(len(class_names), is_test=True, device=test_device)
         predictor = create_mb_tiny_fd_predictor(net, candidate_size=args.candidate_size, device=test_device)
     elif args.net_type == 'RFB':
-        model_path = "models/pretrained/version-RFB-320.pth"
+        model_path = "UltraLightFastGenericFaceDetector1MB/models/pretrained/version-RFB-320.pth"
         # model_path = "models/pretrained/version-RFB-640.pth"
         net = create_Mb_Tiny_RFB_fd(len(class_names), is_test=True, device=test_device)
         predictor = create_Mb_Tiny_RFB_fd_predictor(net, candidate_size=args.candidate_size, device=test_device)
